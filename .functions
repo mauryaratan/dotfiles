@@ -1,1 +1,55 @@
-/Users/ramratanmaurya/.functions
+# Create a new directory and enter it
+function mkd() {
+    mkdir -p "$@" && cd "$@"
+}
+
+# Determine size of a file or total size of a directory
+function fs() {
+        if du -b /dev/null > /dev/null 2>&1; then
+                local arg=-sbh
+        else
+                local arg=-sh
+        fi
+        if [[ -n "$@" ]]; then
+                du $arg -- "$@"
+        else
+                du $arg .[^.]* *
+        fi
+}
+
+# Compare original and gzipped file size
+function gz() {
+        local origsize=$(wc -c < "$1")
+        local gzipsize=$(gzip -c "$1" | wc -c)
+        local ratio=$(echo "$gzipsize * 100/ $origsize" | bc -l)
+        printf "orig: %d bytes\n" "$origsize"
+        printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio"
+}
+
+# Get a character’s Unicode code point
+function codepoint() {
+        perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
+        # print a newline unless we’re piping the output to another program
+        if [ -t 1 ]; then
+                echo # newline
+        fi
+}
+
+# Delete .DS_Store and .sass-cache from folder and zip it
+# e.g.: zip -r foo.zip foo -x "*.DS_Store"
+# -9 compress better
+function zipit() {
+	zip -r "$@".zip "$@" -x "*.DS_Store" -x ".sass-cache" -9
+}
+
+# Show Spotlight
+function spotshow() {
+	sudo chmod 755 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
+	killall SystemUIServer
+}
+
+# Hide Spotlight
+function spothide() {
+	sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
+	killall SystemUIServer
+}
