@@ -39,7 +39,7 @@ function codepoint() {
 # e.g.: zip -r foo.zip foo -x "*.DS_Store"
 # -9 compress better
 function zipit() {
-	zip -r "$@".zip "$@" -x "*.DS_Store" -x *.sass-cache* -x "*.codekit" -x *.git* -9
+	zip -r "$@".zip "$@" -x "*.DS_Store" -x *.sass-cache* -x *.codekit-cache* -x "*.codekit" -x *.git* -9
 }
 
 # Show Spotlight
