@@ -39,7 +39,7 @@ function codepoint() {
 # e.g.: zip -r foo.zip foo -x "*.DS_Store"
 # -9 compress better
 function zipit() {
-	zip -r "$@".zip "$@" -x "*.DS_Store" -x *.sass-cache* -x *.codekit-cache* -x "*.codekit" -x *.git* -9
+	zip -r "$@".zip "$@" -x "*.DS_Store" -x "*.codekit-cache*" -x "*.sass-cache*" -x "*.codekit" -x "*.git*" -x "*.rb" -9
 }
 
 # Show Spotlight
@@ -52,4 +52,30 @@ function spotshow() {
 function spothide() {
 	sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
 	killall SystemUIServer
+}
+
+# Codesniffer
+function cs() {
+    if [ "$@" ]; then
+        phpcs -p -s -v -n "$@" --standard=wp --extensions=php
+    else
+        phpcs -p -s -v -n . --standard=wp --extensions=php
+    fi
+}
+
+function cp() {
+    if [ "$@" ]; then
+        phpcs -p . "$@"  --standard=PHPCompatibility --extensions=php
+    else
+        phpcs -p . --standard=PHPCompatibility --extensions=php
+    fi
+}
+
+# Convert TTF to WOFF2
+function woff2() {
+	if [ -n "$1" ]; then
+		filename=$(basename "$1")
+        #curl --data-binary "@$1" -o "$HOME/Desktop/${filename%.*}.woff2" -H "Content-Type: font/ttf" -H "Accept: font/woff2" -X POST http://188.226.250.76
+		curl --data-binary "@$1" -o "${PWD}/${filename%.*}.woff2" -H "Content-Type: font/ttf" -H "Accept: font/woff2" -X POST http://188.226.250.76
+	fi
 }
