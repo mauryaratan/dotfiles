@@ -13,7 +13,7 @@ alias s="cd ~/Sites"
 alias sudo='sudo '
 
 # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; sudo gem update'
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; sudo gem update –no-ri –no-rdoc'
 
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en1"
@@ -26,3 +26,7 @@ alias whois="whois -h whois-servers.net"
 alias spotoff="sudo mdutil -a -i off"
 # Enable Spotlight
 alias spoton="sudo mdutil -a -i on"
+
+alias woff="/Users/ramratanmaurya/Sites/font-compression/woff2/woff2_compress"
+
+alias vi="vim"
